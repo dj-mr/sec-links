@@ -1,5 +1,5 @@
 /**
- * Domain Model for SEC Data.
+ * Domain class for SEC Data.
  */
 package com.probemore.model;
 
@@ -21,7 +21,8 @@ public class SECData {
     private String      formName;
 
     /**
-     * CIK is unique identifier assigned to a company filing financial data with SEC.
+     * CIK is unique identifier assigned to a company
+     * filing financial data with SEC.
      */
     private String      cik;
 

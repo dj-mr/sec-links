@@ -1,5 +1,5 @@
 /**
- * Controller for SEC Rest API
+ * Controller for SEC Rest API.
  */
 package com.probemore.controller;
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SECLinks {
 
     /**
-     * Method that handles GET request for this controller
+     * Method that handles GET request for this controller.
      * @return Available SEC data
      */
     @GetMapping
