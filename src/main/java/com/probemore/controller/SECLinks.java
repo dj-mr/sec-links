@@ -8,8 +8,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,13 +32,15 @@ public class SECLinks {
                description = "Get all SEC Links stored in local database",
                tags = {"sec"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Return of data"),
-            @ApiResponse(responseCode = "204", description = "Content was not found")
+            @ApiResponse(responseCode = "200",
+                         description = "Successful Return of data"),
+            @ApiResponse(responseCode = "204",
+                         description = "Content was not found")
     })
     @GetMapping
     public List<SECData> getAll() {
         // TODO - Add Business Logic here
-        return null;
+        return Arrays.asList();
     }
 
 
@@ -44,8 +51,10 @@ public class SECLinks {
                description = "Refresh SEC Links from SEC database",
                tags = {"sec"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful refresh operation"),
-            @ApiResponse(responseCode = "401", description = "User not authorized to perform request")
+            @ApiResponse(responseCode = "200",
+                         description = "Successful refresh operation"),
+            @ApiResponse(responseCode = "401",
+                         description = "User not authorized to perform request")
     })
     @PutMapping
     public void refreshDatabase() {

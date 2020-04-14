@@ -1,3 +1,6 @@
+/**
+ * Swagger document Configuration.
+ */
 package com.probemore.config;
 
 import io.swagger.v3.oas.models.Components;
@@ -8,12 +11,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
+    /**
+     * This method creates Swagger document for this application.
+     * @return OpenAPI
+     */
     public OpenAPI customAPI() {
         return new OpenAPI()
                 .components(new Components())
                 .info(new Info()
                           .title("Financial Data Application API")
-                          .description("This is REST API for Financial Data Application"));
+                          .description("This is REST API for Financial "
+                                  + "Data Application"));
     }
 
 }
