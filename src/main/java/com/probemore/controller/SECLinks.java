@@ -3,13 +3,17 @@
  */
 package com.probemore.controller;
 
+import com.probemore.controller.processor.SECLinksProcessor;
 import com.probemore.model.SECData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +26,11 @@ import java.util.List;
                 produces = "application/json")
 @Tag(name = "SECLinks", description = "SEC Links API")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class SECLinks {
+
+    @Autowired
+    private SECLinksProcessor secLinksProcessor;
 
     /**
      * Method that handles GET request for this controller.
@@ -56,9 +64,12 @@ public class SECLinks {
             @ApiResponse(responseCode = "401",
                          description = "User not authorized to perform request")
     })
-    @PutMapping
-    public void refreshDatabase() {
+    @PutMapping(value = {"/{year}"})
+    public void refreshDatabase(@PathVariable("year") String year) {
         // TODO - Add Business Logic here
+        log.debug(""); // TODO - write better logs
+        secLinksProcessor.getDirectoriesInURI(year);
+
     }
 
 }

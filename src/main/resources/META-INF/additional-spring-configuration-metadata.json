@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name" : "edgar.url",
+      "type": "java.lang.String",
+      "description": "EDGAR URL that is used to get SEC Links data."
+    }
+  ]
+}
