@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +30,9 @@ import java.util.List;
 @Slf4j
 public class SECLinks {
 
+    /**
+     * Dependency Injection for SECLinksProcessor.
+     */
     @Autowired
     private SECLinksProcessor secLinksProcessor;
 
@@ -54,6 +58,7 @@ public class SECLinks {
 
     /**
      * Method that handles PUT request for this controller.
+     * @param year - Year for which data must be retrieved.
      */
     @Operation(summary = "Refresh SEC links data",
                description = "Refresh SEC Links from SEC database",
@@ -65,10 +70,13 @@ public class SECLinks {
                          description = "User not authorized to perform request")
     })
     @PutMapping(value = {"/{year}"})
-    public void refreshDatabase(@PathVariable("year") String year) {
+    public void refreshDatabase(@PathVariable("year") final String year) {
         // TODO - Add Business Logic here
-        log.debug(""); // TODO - write better logs
-        secLinksProcessor.getDirectoriesInURI(year);
+        try {
+            long numDirPresent = secLinksProcessor.getDirectoryCountInURI(year);
+        } catch (IOException ioException) {
+            log.debug("Exception encountered reading data. {}", ioException.getMessage());
+        }
 
     }
 

@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FinancialDataApplication {
 
 	/**
-	 * This is the ebtry point method for this application
+	 * This is the entry point method for this application.
 	 * @param args - Arguments passed in command line
 	 */
 	public static void main(String[] args) {
