@@ -29,7 +29,7 @@ public interface SECLinksProcessor {
     long getDirectoryCountInURI(String year) throws IOException;
 
     /**
-     * Download company.zip from each of the folders inside EDGAR "year" folder.
+     * Download company.idx from each of the folders inside EDGAR "year" folder.
      * Sample structure for each QTR with relevant files is shown below using
      * https://www.sec.gov/Archives/edgar/full-index/2019/QTR1/
      *

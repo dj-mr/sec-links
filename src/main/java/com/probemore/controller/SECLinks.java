@@ -74,6 +74,7 @@ public class SECLinks {
         // TODO - Add Business Logic here
         try {
             long numDirPresent = secLinksProcessor.getDirectoryCountInURI(year);
+            secLinksProcessor.downloadEdgarUrls(year, numDirPresent);
         } catch (IOException ioException) {
             log.debug("Exception encountered reading data. {}", ioException.getMessage());
         }
