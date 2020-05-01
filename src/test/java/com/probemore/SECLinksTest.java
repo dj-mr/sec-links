@@ -17,19 +17,31 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = {SECLinks.class, SECLinksProcessorImpl.class})
 public class SECLinksTest {
 
+    /**
+     * SECLinks dependency injection.
+     */
     @Autowired
     private SECLinks secLinks;
 
+    /**
+     * SECLinksProcessor dependency injection.
+     */
     @Autowired
     private SECLinksProcessor secLinksProcessor;
 
+    /**
+     * Test to check if SECLinks bean is created.
+     */
     @Test
-    public void tesSECLinksBean_BeanMustExist() {
+    public void testSECLinksBean_BeanMustExist() {
         Assert.assertNotNull(secLinks);
     }
 
+    /**
+     * Test to check if SECLinksProcessor bean is created.
+     */
     @Test
-    public void tesSECLinksProcessorBean_BeanMustExist() {
+    public void testSECLinksProcessorBean_BeanMustExist() {
         Assert.assertNotNull(secLinksProcessor);
     }
 

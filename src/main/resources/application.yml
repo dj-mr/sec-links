@@ -1,0 +1,8 @@
+seclinks:
+  default:
+    getSize: 500
+    getOffset: 0
+    putSize: 500
+  comparision:
+    stringMax: zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    minFilingYear: 20

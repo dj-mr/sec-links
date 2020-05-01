@@ -3,9 +3,30 @@
  */
 package com.probemore.controller.processor;
 
+import com.probemore.model.SECData;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 public interface SECLinksProcessor {
+
+    /**
+     * Fetches URL content given a CIK.
+     * @param cik that needs to be looked up
+     * @param formname that is used to filter data
+     * @param filingdate that is used to filter data
+     * @param offset that defines number of records to skip
+     * @param length that defines number of records to fetch
+     * @return Lis of URLs
+     */
+    List<SECData> getFilteredUrls(
+            Optional<String>     cik,
+            Optional<String>     formname,
+            Optional<LocalDate>  filingdate,
+            Optional<Integer>    offset,
+            Optional<Integer>    length
+    );
 
     /**
      * EDGAR data is organized by year. Under year, data is
@@ -51,10 +72,15 @@ public interface SECLinksProcessor {
      * master.zip     3473 KB    03/29/2019 10:11:52 PM
      * =================================================
      *
-     *
-     * @param quarters
+     * @param year Year for which data is downloaded
+     * @param quarter Financial quarter for which data must be extracted
      * @throws IOException
      */
-    void downloadEdgarUrls(String year, long quarters) throws IOException;
+    void downloadEdgarUrls(String year, long quarter) throws IOException;
+
+    /**
+     * Download company.idx for current and past quarters.
+     */
+    void downloadEdgarUrls() throws IOException;
 
 }
