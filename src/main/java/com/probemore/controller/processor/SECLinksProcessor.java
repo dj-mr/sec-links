@@ -3,7 +3,8 @@
  */
 package com.probemore.controller.processor;
 
-import com.probemore.model.SECData;
+import com.probemore.model.SECLinks;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,34 +21,13 @@ public interface SECLinksProcessor {
      * @param length that defines number of records to fetch
      * @return Lis of URLs
      */
-    List<SECData> getFilteredUrls(
+    List<SECLinks> getFilteredUrls(
             Optional<String>     cik,
             Optional<String>     formname,
             Optional<LocalDate>  filingdate,
             Optional<Integer>    offset,
             Optional<Integer>    length
     );
-
-    /**
-     * EDGAR data is organized by year. Under year, data is
-     * organized by quarters as shown below for
-     * https://www.sec.gov/Archives/edgar/full-index/2019/
-     *
-     * ========================================
-     * Name      Size      Last Modified
-     * ========================================
-     * QTR1                09/28/2019 03:15:44 AM
-     * QTR2                09/28/2019 03:17:45 AM
-     * QTR3                09/30/2019 10:26:12 PM
-     * QTR4                10/01/2019 12:20:13 AM
-     * ========================================
-     *
-     * @param year - The "Year" folder that must be navigated. 2019 in above URL
-     * @return Returns count of lines with occurence of string "QTR".
-     *         Each occurrence represents data available for a quarter
-     *         starting with QTR1
-     */
-    long getDirectoryCountInURI(String year) throws IOException;
 
     /**
      * Download company.idx from each of the folders inside EDGAR "year" folder.
@@ -76,11 +56,7 @@ public interface SECLinksProcessor {
      * @param quarter Financial quarter for which data must be extracted
      * @throws IOException
      */
-    void downloadEdgarUrls(String year, long quarter) throws IOException;
-
-    /**
-     * Download company.idx for current and past quarters.
-     */
-    void downloadEdgarUrls() throws IOException;
+    void downloadEdgarUrls(Optional<String> year, Optional<Long> quarter)
+            throws IOException;
 
 }

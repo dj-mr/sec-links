@@ -4,7 +4,6 @@
 package com.probemore.controller;
 
 import com.probemore.controller.processor.SECLinksProcessor;
-import com.probemore.model.SECData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,11 +38,12 @@ public class SECLinks {
 
     /**
      * Method that handles GET by filters for this controller.
-     * @param cik that is used to filter data
-     * @param formname that is used to filter data
+     *
+     * @param cik        that is used to filter data
+     * @param formname   that is used to filter data
      * @param filingdate that is used to filter data
-     * @param offset number of initial records to skip
-     * @param length number of records to fetch. Defaulted to 500
+     * @param offset     number of initial records to skip
+     * @param length     number of records to fetch. Defaulted to 500
      * @return Available SEC data
      */
     @Operation(summary = "GET SEC Links filtered by params if provided",
@@ -57,13 +56,13 @@ public class SECLinks {
                     description = "Content was not found")
     })
     @GetMapping
-    public List<SECData> getFilteredUrls(
-            @RequestParam final Optional<String>     cik,
-            @RequestParam final Optional<String>     formname,
+    public List<com.probemore.model.SECLinks> getFilteredUrls(
+            @RequestParam final Optional<String> cik,
+            @RequestParam final Optional<String> formname,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                    final Optional<LocalDate>  filingdate,
-            @RequestParam final Optional<Integer>    offset,
-            @RequestParam final Optional<Integer>    length
+                final Optional<LocalDate> filingdate,
+            @RequestParam final Optional<Integer> offset,
+            @RequestParam final Optional<Integer> length
     ) {
         return secLinksProcessor.getFilteredUrls(
                 cik,
@@ -75,10 +74,14 @@ public class SECLinks {
     }
 
     /**
-     * Method that handles PUT request when no parameters are provided.
+     * Method that handles PUT request for this controller.
+     * This is executed when "year" is passed as parameter.
+     *
+     * @param year    - Year for which data must be refreshed.
+     * @param quarter - Quarter for which data must be refreshed.
      */
-    @Operation(summary = "Refresh SEC links data",
-            description = "Refresh SEC Links",
+    @Operation(summary = "Refresh SEC links data for given year and quarter",
+            description = "Refresh SEC Links for given year and quarter",
             tags = {"sec"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -87,41 +90,14 @@ public class SECLinks {
                     description = "User not authorized to perform request")
     })
     @PutMapping
-    public void refreshDatabase() {
+    public void refreshDatabase(
+            @RequestParam final Optional<String> year,
+            @RequestParam final Optional<Long> quarter
+            ) {
         try {
-            secLinksProcessor.downloadEdgarUrls();
+            secLinksProcessor.downloadEdgarUrls(year, quarter);
         } catch (IOException ioException) {
             log.debug("Exception encountered refreshing data. {}", ioException);
         }
     }
-
-
-    /**
-     * Method that handles PUT request for this controller.
-     * This is executed when "year" is passed as parameter.
-     * @param year - Year for which data must be retrieved.
-     */
-    @Operation(summary = "Refresh SEC links data for given year",
-               description = "Refresh SEC Links for given year",
-               tags = {"sec"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                         description = "Successful refresh operation"),
-            @ApiResponse(responseCode = "401",
-                         description = "User not authorized to perform request")
-    })
-    @PutMapping(value = {"/{year}"})
-    public void refreshDatabase(@PathVariable("year") final String year) {
-
-        try {
-            long numDirPresent = secLinksProcessor.getDirectoryCountInURI(year);
-            for (long quarter = 1; quarter < numDirPresent + 1; quarter++) {
-                secLinksProcessor.downloadEdgarUrls(year, quarter);
-            }
-        } catch (IOException ioException) {
-            log.debug("Exception encountered refreshing data. {}", ioException);
-        }
-
-    }
-
 }

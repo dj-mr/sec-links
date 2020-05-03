@@ -3,8 +3,8 @@
  */
 package com.probemore.data;
 
-import com.probemore.model.SECData;
-import com.probemore.model.SECDataCompositeKey;
+import com.probemore.model.SECLinks;
+import com.probemore.model.SECLinksCompositeKey;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface SECLinksRepository
-        extends JpaRepository<SECData, SECDataCompositeKey> {
+        extends JpaRepository<SECLinks, SECLinksCompositeKey> {
 
     /**
      * Fetch all CIK related content in Descending order of Filing Date.
@@ -27,7 +27,7 @@ public interface SECLinksRepository
      * @param pageable defines offset and length values for extraction
      * @return returns list of all SEC URLs
      */
-    List<SECData> findAllByCikBetweenAndFormNameBetweenAndFilingDateBetweenOrderByFilingDateDesc(
+    List<SECLinks> findAllByCikBetweenAndFormNameBetweenAndFilingDateBetweenOrderByFilingDateDesc(
             String minCik,
             String maxCik,
             String minFormName,

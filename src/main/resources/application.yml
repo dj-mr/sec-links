@@ -1,3 +1,15 @@
+edgar:
+  prefix: https://www.sec.gov/Archives/
+  url: https://www.sec.gov/Archives/edgar/full-index/
+logging:
+  level:
+    com:
+      probemore: DEBUG
+    org:
+      hibernate:
+        SQL: debug
+        type: TRACE
+        type.descriptor.sql: trace
 seclinks:
   default:
     getSize: 500
@@ -6,3 +18,32 @@ seclinks:
   comparision:
     stringMax: zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
     minFilingYear: 20
+  get:
+    defaultPageSize: 500
+  constants:
+    firstQuarter: 1
+    secondQuarter: 2
+    thirdQuarter: 3
+    fourthQuarter: 4
+spring:
+  data:
+    rest:
+      base-path: /api
+  datasource:
+    url: jdbc:h2:file:~/h2/financial-data
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console/
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: true
+        type: trace
+        use_sql_comments: true
+    show-sql: true
