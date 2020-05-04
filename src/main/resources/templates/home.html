@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SEC List Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/datatables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}"/>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" charset="utf8" th:src="@{/js/datatables.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="banner">SEC URLs list</h1>
+    <hr/>
+    <div class="seclist">
+        <table id="data_table">
+            <thead>
+            <tr>
+                <th class="leftIndentedCell">Organization Name</th>
+                <th class="leftIndentedCell">Form Name</th>
+                <th class="leftIndentedCell">CIK</th>
+                <th class="leftIndentedCell">Filing Date</th>
+                <th class="leftIndentedCell">Form URL</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button id="update">Refresh data</button>
+    </div>
+    <div class="error">
+    </div>
+    <div class="footer">
+        API Documentation can be found <a target="_blank" rel="noopener noreferrer" href='/swagger-ui.html#'>here</a>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/home.js}"></script>
+</html>

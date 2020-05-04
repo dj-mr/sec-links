@@ -104,7 +104,8 @@ public class SECLinksProcessorImpl implements SECLinksProcessor {
      * Fetch EDGAR URLs with data filtered by parameters passed.
      * @param cik that needs to be looked up
      * @param formname that is used to filter data
-     * @param filingdate that is used to filter data
+     * @param startfilingdate that is used to filter data
+     * @param endfilingdate that is used to filter data
      * @param offset that defines number of records to skip
      * @param length that defines number of records to fetch
      * @return Returns list of all SEC URLs
@@ -112,7 +113,8 @@ public class SECLinksProcessorImpl implements SECLinksProcessor {
     public List<SECLinks> getFilteredUrls(
             final Optional<String>     cik,
             final Optional<String>     formname,
-            final Optional<LocalDate>  filingdate,
+            final Optional<LocalDate>  startfilingdate,
+            final Optional<LocalDate>  endfilingdate,
             final Optional<Integer>    offset,
             final Optional<Integer>    length
     ) {
@@ -125,10 +127,10 @@ public class SECLinksProcessorImpl implements SECLinksProcessor {
                         cik.orElse(stringMaxValue),
                         formname.orElse(""),
                         formname.orElse(stringMaxValue),
-                        filingdate.orElse(
+                        startfilingdate.orElse(
                                 LocalDate.now().minusYears(minFilingYear)
                         ),
-                        filingdate.orElse(LocalDate.now()),
+                        endfilingdate.orElse(LocalDate.now()),
                         pageable
                 );
     }
@@ -297,9 +299,9 @@ public class SECLinksProcessorImpl implements SECLinksProcessor {
                                 .lines()
                                 .parallel()
                                 .filter(x -> x.contains("10-Q")
-                                        || x.contains("10-K")
-                                        || x.contains("10-Q/A")
-                                        || x.contains("10-K/A"))
+                                        || x.contains("10-K"))
+                                .filter(x -> !x.contains("NT 10-K")
+                                        && !x.contains("NT 10-Q"))
                                 .map(splitEdgarRowIntoFields)
                                 .peek(x -> log.debug(x.toString()))
                                 .collect(Collectors.toList())

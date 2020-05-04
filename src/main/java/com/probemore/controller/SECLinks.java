@@ -41,7 +41,8 @@ public class SECLinks {
      *
      * @param cik        that is used to filter data
      * @param formname   that is used to filter data
-     * @param filingdate that is used to filter data
+     * @param startfilingdate that is used to filter data
+     * @param endfilingdate that is used to filter data
      * @param offset     number of initial records to skip
      * @param length     number of records to fetch. Defaulted to 500
      * @return Available SEC data
@@ -60,14 +61,17 @@ public class SECLinks {
             @RequestParam final Optional<String> cik,
             @RequestParam final Optional<String> formname,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                final Optional<LocalDate> filingdate,
+                final Optional<LocalDate> startfilingdate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                final Optional<LocalDate> endfilingdate,
             @RequestParam final Optional<Integer> offset,
             @RequestParam final Optional<Integer> length
     ) {
         return secLinksProcessor.getFilteredUrls(
                 cik,
                 formname,
-                filingdate,
+                startfilingdate,
+                endfilingdate,
                 offset,
                 length
         );

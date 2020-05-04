@@ -16,7 +16,8 @@ public interface SECLinksProcessor {
      * Fetches URL content given a CIK.
      * @param cik that needs to be looked up
      * @param formname that is used to filter data
-     * @param filingdate that is used to filter data
+     * @param startfilingdate that is used to filter data
+     * @param endfilingdate that is used to filter data
      * @param offset that defines number of records to skip
      * @param length that defines number of records to fetch
      * @return Lis of URLs
@@ -24,7 +25,8 @@ public interface SECLinksProcessor {
     List<SECLinks> getFilteredUrls(
             Optional<String>     cik,
             Optional<String>     formname,
-            Optional<LocalDate>  filingdate,
+            Optional<LocalDate>  startfilingdate,
+            Optional<LocalDate>  endfilingdate,
             Optional<Integer>    offset,
             Optional<Integer>    length
     );

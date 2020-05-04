@@ -26,6 +26,8 @@ seclinks:
     thirdQuarter: 3
     fourthQuarter: 4
 spring:
+  application:
+    name: SEC-LINKS
   data:
     rest:
       base-path: /api
@@ -47,3 +49,21 @@ spring:
         type: trace
         use_sql_comments: true
     show-sql: true
+server:
+  port: 0
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: env, info, health
+  endpoint:
+    health:
+      show-details: always
+    env:
+      enabled: true
+eureka:
+  instance:
+    status-page-url-path: /info
+    health-check-url-path: /health
+    home-page-url: /
