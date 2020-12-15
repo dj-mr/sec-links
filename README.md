@@ -1,4 +1,4 @@
-# Ticker List 
+# SEC Links List 
 This application provides Organization Details. Refresh operation refreshes the details. Data returned includes following fields
  - Company Name
  - Form Name
