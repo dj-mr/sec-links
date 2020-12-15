@@ -1,41 +1,42 @@
-/**
- * Interface that defines contract for SECLinksProcessor methods.
- */
-package com.probemore.controller.processor;
+package dj.mr.controller.processor;
 
-import com.probemore.model.SECLinks;
+import dj.mr.model.SecLinks;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interface that defines contract for SECLinksProcessor methods.
+ */
 public interface SECLinksProcessor {
 
     /**
      * Fetches URL content given a CIK.
-     * @param cik that needs to be looked up
-     * @param formname that is used to filter data
+     *
+     * @param cik             that needs to be looked up
+     * @param formname        that is used to filter data
      * @param startfilingdate that is used to filter data
-     * @param endfilingdate that is used to filter data
-     * @param offset that defines number of records to skip
-     * @param length that defines number of records to fetch
+     * @param endfilingdate   that is used to filter data
+     * @param offset          that defines number of records to skip
+     * @param length          that defines number of records to fetch
      * @return Lis of URLs
      */
-    List<SECLinks> getFilteredUrls(
-            Optional<String>     cik,
-            Optional<String>     formname,
-            Optional<LocalDate>  startfilingdate,
-            Optional<LocalDate>  endfilingdate,
-            Optional<Integer>    offset,
-            Optional<Integer>    length
+    List<SecLinks> getFilteredUrls(
+            Optional<String> cik,
+            Optional<String> formname,
+            Optional<LocalDate> startfilingdate,
+            Optional<LocalDate> endfilingdate,
+            Optional<Integer> offset,
+            Optional<Integer> length
     );
 
     /**
      * Download company.idx from each of the folders inside EDGAR "year" folder.
      * Sample structure for each QTR with relevant files is shown below using
      * https://www.sec.gov/Archives/edgar/full-index/2019/QTR1/
-     *
+     * <p>
      * =================================================
      * Name           Size       Last Modified
      * =================================================
@@ -54,9 +55,10 @@ public interface SECLinksProcessor {
      * master.zip     3473 KB    03/29/2019 10:11:52 PM
      * =================================================
      *
-     * @param year Year for which data is downloaded
+     * @param year    Year for which data is downloaded
      * @param quarter Financial quarter for which data must be extracted
-     * @throws IOException
+     * @throws IOException when reading content from URI.
+     *
      */
     void downloadEdgarUrls(Optional<String> year, Optional<Long> quarter)
             throws IOException;

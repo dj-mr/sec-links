@@ -1,11 +1,8 @@
-/**
- * JUnits for SECLinks class.
- */
-package com.probemore;
+package dj.mr;
 
-import com.probemore.controller.SECLinks;
-import com.probemore.controller.processor.SECLinksProcessor;
-import com.probemore.controller.processor.SECLinksProcessorImpl;
+import dj.mr.controller.SECLinks;
+import dj.mr.controller.processor.SECLinksProcessor;
+import dj.mr.controller.processor.SECLinksProcessorImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/**
+ * JUnits for SecLinks class.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {SECLinks.class, SECLinksProcessorImpl.class})
-public class SECLinksTest {
+public class SecLinksTest {
 
     /**
-     * SECLinks dependency injection.
+     * SecLinks dependency injection.
      */
     @Autowired
     private SECLinks secLinks;
@@ -30,7 +30,7 @@ public class SECLinksTest {
     private SECLinksProcessor secLinksProcessor;
 
     /**
-     * Test to check if SECLinks bean is created.
+     * Test to check if SecLinks bean is created.
      */
     @Test
     public void testSECLinksBean_BeanMustExist() {

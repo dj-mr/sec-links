@@ -1,4 +1,4 @@
-package com.probemore.model;
+package dj.mr.model;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,14 +13,14 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
-public class SECLinksCompositeKey implements Serializable {
+public class SecLinksCompositeKey implements Serializable {
 
     /**
      * Name of document filed. Example: 10-Q, 10-K.
      */
     @Id
     @NotNull
-    private final String      formName;
+    private final String formName;
 
     /**
      * CIK is unique identifier assigned to a company
@@ -28,7 +28,7 @@ public class SECLinksCompositeKey implements Serializable {
      */
     @Id
     @NotNull
-    private final String      cik;
+    private final String cik;
 
     /**
      * Date form was prepared/filed with SEC.

@@ -7,17 +7,17 @@
 let ns = {};
 
 // Create the model instance
-ns.model = (function() {
+ns.model = (function () {
     'use strict';
 
-    let start_date = new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+    let start_date = new Date(new Date() - 30 * 24 * 60 * 60 * 1000)
         .toISOString()
         .substr(0, 10);
     let $event_pump = $('body');
 
     // Return the API
     return {
-        'read': function() {
+        'read': function () {
             let ajax_options = {
                 type: 'GET',
                 url: 'sec',
@@ -27,23 +27,23 @@ ns.model = (function() {
                 dataType: 'json'
             };
             $.ajax(ajax_options)
-            .done(function(data) {
-                $event_pump.trigger('model_read_success', [data]);
-            })
-            .fail(function(xhr, textStatus, errorThrown) {
-                $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
-            })
+                .done(function (data) {
+                    $event_pump.trigger('model_read_success', [data]);
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
+                })
         },
-        update: function() {
+        update: function () {
             let ajax_options = {
                 type: 'PUT',
                 url: 'sec'
             };
             $.ajax(ajax_options)
-                .done(function(data) {
+                .done(function (data) {
                     $event_pump.trigger('model_update_success', [data]);
                 })
-                .fail(function(xhr, textStatus, errorThrown) {
+                .fail(function (xhr, textStatus, errorThrown) {
                     $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
                 })
         }
@@ -51,34 +51,33 @@ ns.model = (function() {
 }());
 
 // Create the view instance
-ns.view = (function() {
+ns.view = (function () {
     'use strict';
 
     let
-        $OrganizationName    = $('#OrganizationName'),
-        $FormName            = $('#FormName'),
-        $CIK                 = $('#CIK'),
-        $FilingDate          = $('#FilingDate'),
-        $SECUrl              = $('#SECUrl');
+        $OrganizationName = $('#OrganizationName'),
+        $FormName = $('#FormName'),
+        $CIK = $('#CIK'),
+        $FilingDate = $('#FilingDate'),
+        $SECUrl = $('#SECUrl');
 
     // return the API
     return {
-        reset: function() {
+        reset: function () {
             $OrganizationName.val('').focus();
             $FormName.val('');
             $FilingDate.val('');
             $SECUrl.val('');
             $CIK.val('');
         },
-        update_editor: function(OrganizationName, FormName, CIK, FilingDate, SECUrl)
-        {
+        update_editor: function (OrganizationName, FormName, CIK, FilingDate, SECUrl) {
             $OrganizationName.val(OrganizationName).focus();
             $FormName.val(FormName);
             $CIK.val(CIK);
             $FilingDate.val(FilingDate);
             $SECUrl.val(SECUrl);
         },
-        build_table: function(seclist) {
+        build_table: function (seclist) {
 
             let rows = ''
 
@@ -87,28 +86,28 @@ ns.view = (function() {
 
             // did we get a seclist array?
             if (seclist) {
-                for (let i=0, l=seclist.length; i < l; i++) {
+                for (let i = 0, l = seclist.length; i < l; i++) {
                     rows += `<tr> 
                                     <td class="leftIndentedCell">${seclist[i].organizationName}</td>
                                     <td class="leftIndentedCell">${seclist[i].formName}</td>
                                     <td class="leftIndentedCell">${seclist[i].cik}</td>
                                     <td class="leftIndentedCell">${seclist[i].filingDate}</td>
-                                    <td class="leftIndentedCell"><a target="_blank" rel="noopener noreferrer" href="${seclist[i].secUrl}">report</a></td>
+                                    <td class="leftIndentedCell"><a target="_blank" rel="noopener noreferrer" href="${seclist[i].secUrl}">${seclist[i].secUrl}</a></td>
                             </tr>`;
                 }
                 $('table > tbody').append(rows);
             }
 
             // Pagination and Search Capabilities
-            $(document).ready( function () {
+            $(document).ready(function () {
                 $('#data_table').DataTable();
-            } );
+            });
         },
-        error: function(error_msg) {
+        error: function (error_msg) {
             $('.error')
                 .text(error_msg)
                 .css('visibility', 'visible');
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.error').css('visibility', 'hidden');
             }, 3000)
         }
@@ -116,7 +115,7 @@ ns.view = (function() {
 }());
 
 // Create the controller
-ns.controller = (function(m, v) {
+ns.controller = (function (m, v) {
     'use strict';
 
     let model = m,
@@ -124,24 +123,24 @@ ns.controller = (function(m, v) {
         $event_pump = $('body');
 
     // Get the data from the model after the controller is done initializing
-    setTimeout(function() {
+    setTimeout(function () {
         model.read();
     }, 100)
 
 
-    $('#update').click(function(e) {
+    $('#update').click(function (e) {
         model.update()
         e.preventDefault();
     });
 
     // Create our event handlers
-    $('table > tbody').on('dblclick', 'tr', function(e) {
+    $('table > tbody').on('dblclick', 'tr', function (e) {
         let $target = $(e.target),
-            OrganizationName    ,
-            FormName            ,
-            CIK                 ,
-            FilingDate          ,
-            SECUrl              ;
+            OrganizationName,
+            FormName,
+            CIK,
+            FilingDate,
+            SECUrl;
 
         OrganizationName = $target
             .parent()
@@ -172,16 +171,17 @@ ns.controller = (function(m, v) {
     });
 
     // Handle the model events
-    $event_pump.on('model_read_success', function(e, data) {
+    $event_pump.on('model_read_success', function (e, data) {
         view.build_table(data);
         view.reset();
     });
 
-    $event_pump.on('model_update_success', function(e, data) {
-        model.read();
+    $event_pump.on('model_update_success', function (e, data) {
+        view.build_table(data);
+        view.reset();
     });
 
-    $event_pump.on('model_error', function(e, xhr, textStatus, errorThrown) {
+    $event_pump.on('model_error', function (e, xhr, textStatus, errorThrown) {
         let error_msg = textStatus + ': ' + errorThrown + ' - ' + xhr.status + ' - ' + xhr.responseText;
         view.error(error_msg);
         console.log(error_msg);

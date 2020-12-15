@@ -8,12 +8,27 @@
     {
       "name": "edgar.prefix",
       "type": "java.lang.String",
-      "description": "EDGAR domain name"
+      "description": "EDGAR domain name."
     },
     {
       "name": "seclinks.get.defaultPageSize",
       "type": "java.lang.Integer",
       "description": "Default limit for number of rows to fetch during GET."
+    },
+    {
+      "name": "eureka.instance.status-page-url-path",
+      "type": "java.lang.String",
+      "description": "Path for /info that service discovery will monitor."
+    },
+    {
+      "name": "eureka.instance.health-check-url-path",
+      "type": "java.lang.String",
+      "description": "Path for /health that service discovery will monitor."
+    },
+    {
+      "name": "eureka.instance.home-page-url",
+      "type": "java.lang.String",
+      "description": "Path for home page that service discovery will monitor."
     }
   ]
 }

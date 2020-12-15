@@ -1,56 +1,49 @@
+# EDGAR links.
 edgar:
   prefix: https://www.sec.gov/Archives/
   url: https://www.sec.gov/Archives/edgar/full-index/
+
+# Logging configuration.
 logging:
   level:
-    com:
-      probemore: DEBUG
+    dj:
+      mr: DEBUG
     org:
       hibernate:
         SQL: debug
         type: TRACE
         type.descriptor.sql: trace
-seclinks:
-  default:
-    getSize: 500
-    getOffset: 0
-    putSize: 500
-  comparision:
-    stringMax: zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-    minFilingYear: 20
-  get:
-    defaultPageSize: 500
-  constants:
-    firstQuarter: 1
-    secondQuarter: 2
-    thirdQuarter: 3
-    fourthQuarter: 4
+
+# Spring data configuration.
 spring:
   application:
-    name: SEC-LINKS
+    name: sec-links
   data:
     rest:
       base-path: /api
   datasource:
-    url: jdbc:h2:file:~/h2/financial-data
-    username: sa
-  h2:
-    console:
-      enabled: true
-      path: /h2-console/
+    url: jdbc:postgresql://localhost:5432/financial-data
+    username: admin
+    password: admin
   jpa:
     generate-ddl: true
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: false
         show_sql: true
         type: trace
         use_sql_comments: true
+        default_schema: sec_links
     show-sql: true
+
+# Application host and port details.
 server:
-  port: 0
+  port: 8443
+
+# Spring boot actuator and related end point configuration.
 management:
   endpoints:
     web:
@@ -62,6 +55,8 @@ management:
       show-details: always
     env:
       enabled: true
+
+# Service discovery configuration.
 eureka:
   instance:
     status-page-url-path: /info

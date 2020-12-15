@@ -1,7 +1,4 @@
-/**
- * Domain class for SEC Data.
- */
-package com.probemore.model;
+package dj.mr.model;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -15,24 +12,27 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * Domain class for SEC Data.
+ */
 @Data
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
-@IdClass(SECLinksCompositeKey.class)
-public class SECLinks implements Serializable {
+@IdClass(SecLinksCompositeKey.class)
+public class SecLinks implements Serializable {
 
     /**
      * Organization Name as registered with SEC.
      */
-    private final String      organizationName;
+    private final String organizationName;
 
     /**
      * Name of document filed. Example: 10-Q, 10-K.
      */
     @Id
     @NotNull
-    private final String      formName;
+    private final String formName;
 
     /**
      * CIK is unique identifier assigned to a company
@@ -40,18 +40,18 @@ public class SECLinks implements Serializable {
      */
     @Id
     @NotNull
-    private final String      cik;
+    private final String cik;
 
     /**
      * Date form was prepared/filed with SEC.
      */
     @Id
     @NotNull
-    private final LocalDate   filingDate;
+    private final LocalDate filingDate;
 
     /**
      * EDGAR URL needed to get form that was filed.
      */
-    private final String      secUrl;
+    private final String secUrl;
 
 }

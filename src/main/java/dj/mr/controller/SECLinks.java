@@ -1,9 +1,7 @@
-/**
- * Controller for SEC Rest API.
- */
-package com.probemore.controller;
+package dj.mr.controller;
 
-import com.probemore.controller.processor.SECLinksProcessor;
+import dj.mr.controller.processor.SECLinksProcessor;
+import dj.mr.model.SecLinks;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,15 +15,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller for SEC Rest API.
+ */
 @RestController
 @RequestMapping(path = "/sec",
-                produces = "application/json")
-@Tag(name = "SECLinks", description = "SEC Links API")
+        produces = "application/json")
+@Tag(name = "SecLinks", description = "SEC Links API")
 @CrossOrigin(origins = "*")
 @Slf4j
 public class SECLinks {
@@ -39,12 +41,12 @@ public class SECLinks {
     /**
      * Method that handles GET by filters for this controller.
      *
-     * @param cik        that is used to filter data
-     * @param formname   that is used to filter data
+     * @param cik             that is used to filter data
+     * @param formname        that is used to filter data
      * @param startfilingdate that is used to filter data
-     * @param endfilingdate that is used to filter data
-     * @param offset     number of initial records to skip
-     * @param length     number of records to fetch. Defaulted to 500
+     * @param endfilingdate   that is used to filter data
+     * @param offset          number of initial records to skip
+     * @param length          number of records to fetch. Defaulted to 500
      * @return Available SEC data
      */
     @Operation(summary = "GET SEC Links filtered by params if provided",
@@ -57,13 +59,11 @@ public class SECLinks {
                     description = "Content was not found")
     })
     @GetMapping
-    public List<com.probemore.model.SECLinks> getFilteredUrls(
+    public List<SecLinks> getFilteredUrls(
             @RequestParam final Optional<String> cik,
             @RequestParam final Optional<String> formname,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                final Optional<LocalDate> startfilingdate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                final Optional<LocalDate> endfilingdate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) final Optional<LocalDate> startfilingdate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) final Optional<LocalDate> endfilingdate,
             @RequestParam final Optional<Integer> offset,
             @RequestParam final Optional<Integer> length
     ) {
@@ -97,11 +97,11 @@ public class SECLinks {
     public void refreshDatabase(
             @RequestParam final Optional<String> year,
             @RequestParam final Optional<Long> quarter
-            ) {
+    ) {
         try {
             secLinksProcessor.downloadEdgarUrls(year, quarter);
         } catch (IOException ioException) {
-            log.debug("Exception encountered refreshing data. {}", ioException);
+            log.debug("Exception encountered refreshing data. {}", ioException.getMessage());
         }
     }
 }

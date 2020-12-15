@@ -1,4 +1,4 @@
-package com.probemore.controller;
+package dj.mr.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +10,7 @@ public class HomeController {
 
     /**
      * Home page for this application.
+     *
      * @return name of the html file that is invoked.
      */
     @GetMapping
